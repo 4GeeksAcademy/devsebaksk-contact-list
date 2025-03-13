@@ -1,5 +1,7 @@
-export const initialStore=()=>{
-  return{
+import useGlobalReducer from "./hooks/useGlobalReducer";
+
+export const initialStore = () => {
+  return {
     message: null,
     todos: [
       {
@@ -12,21 +14,28 @@ export const initialStore=()=>{
         title: "Do my homework",
         background: null,
       }
-    ]
+    ],
+    contacts: []
   }
 }
 
 export default function storeReducer(store, action = {}) {
-  switch(action.type){
+  switch (action.type) {
     case 'add_task':
 
-      const { id,  color } = action.payload
+      const { id, color } = action.payload
 
       return {
         ...store,
         todos: store.todos.map((todo) => (todo.id === id ? { ...todo, background: color } : todo))
       };
+    case 'show_contacts':
+      const { contacts } = action.payload
+      return {
+        ...store,
+        contacts: contacts
+      }
     default:
       throw Error('Unknown action.');
-  }    
+  }
 }
